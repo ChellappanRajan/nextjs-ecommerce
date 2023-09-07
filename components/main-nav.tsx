@@ -10,7 +10,7 @@ export default function MainNav({
     ...props
 }:{
     className:any,
-    props:any
+    props?:any
 }) {
   const pathname = usePathname();
   const params = useParams();
