@@ -13,7 +13,7 @@ export default function BillboardClient() {
   const params = useParams();
   return (
    <>
-    <div className='flex items-center justify-center'>
+    <div className='flex items-center justify-between'>
       <Heading title="Billboard (0)"
       description='Manage billboards for your store'></Heading>
     <Button
