@@ -25,10 +25,10 @@ export const Modal: React.FC<ModalProps> = ({
   return <Dialog open={isOpen} onOpenChange={onChange}>
     <DialogContent>
         <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-left">
                 {title}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription  className="text-left">
             {description}
             </DialogDescription>
         </DialogHeader>
