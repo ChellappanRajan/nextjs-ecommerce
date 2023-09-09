@@ -19,7 +19,7 @@ export async function POST(
     if (!imageUrl) {
       return new NextResponse("ImageUrl is required", { status: 401 });
     }
-    if (params.storeId) {
+    if (!params.storeId) {
       return new NextResponse("StoreId is required", { status: 401 });
     }
 

@@ -54,6 +54,7 @@ export default function BillboardForm({initialData}:BillboardFormProps) {
 
 
   const onSubmit =async (data:BillboardFormValues)=>{
+    console.log(initialData,data,'bilboard');
     try {
       setLoading(true);
       if(initialData){
@@ -64,7 +65,7 @@ export default function BillboardForm({initialData}:BillboardFormProps) {
       router.refresh();
       toast.success(toastMessage);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong",error);
     }
     finally{
       setLoading(false);
