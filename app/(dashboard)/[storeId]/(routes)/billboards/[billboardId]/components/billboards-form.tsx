@@ -5,6 +5,7 @@ import ApiAlert from '@/components/ui/api-alert';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import Heading from '@/components/ui/heading';
+import ImageUpload from '@/components/ui/image-upload';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useOrigin } from '@/hooks/use-origin';
@@ -26,9 +27,6 @@ const formSchema = z.object({
   label:z.string().min(1),
   imageUrl:z.string().min(1)
 });
-
-
-
 
 
 type BillboardFormValues = z.infer<typeof formSchema>;
@@ -106,6 +104,28 @@ export default function BillboardForm({initialData}:BillboardFormProps) {
 <Separator/>
 <Form {...form}>
   <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8 w-full'>
+     <FormField 
+    control={form.control}
+    name="imageUrl"
+    render={({field})=>(
+      <FormItem>
+        <FormLabel>
+          Background image
+        </FormLabel>
+        <FormControl>
+          <ImageUpload value={field.value ? [field.value]:[]}
+          disabled={loading}
+          onChange={(url)=>field.onChange(url)}
+          onRemove={()=>field.onChange("")}
+          ></ImageUpload>
+          {/* <Input disabled={loading} placeholder='Store name' {...field}/> */}
+        </FormControl>
+        <FormMessage>
+
+        </FormMessage>
+      </FormItem>
+    )}
+    />
     <div className='grid grid-cols-3 gap-8'>
     <FormField 
     control={form.control}
@@ -124,23 +144,7 @@ export default function BillboardForm({initialData}:BillboardFormProps) {
       </FormItem>
     )}
     />
-     {/* <FormField 
-    control={form.control}
-    name="imageUrl"
-    render={({field})=>(
-      <FormItem>
-        <FormLabel>
-          ImageUrl
-        </FormLabel>
-        <FormControl>
-          <Input disabled={loading} placeholder='Store name' {...field}/>
-        </FormControl>
-        <FormMessage>
-
-        </FormMessage>
-      </FormItem>
-    )}
-    /> */}
+    
     </div>
     <Button disabled={loading} className='ml-auto' type='submit'>
       {action}
