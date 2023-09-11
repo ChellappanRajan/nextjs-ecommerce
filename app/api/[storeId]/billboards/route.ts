@@ -1,6 +1,27 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+export async function GET(
+  req: Request,
+  { params }: { params: { storeId: string } }
+) {
+  try {
+    if (!params.storeId) {
+      return new NextResponse("StoreId is required", { status: 401 });
+    }
+
+    const billboards = await prismadb.billboard.findMany({
+      where: {
+        storeId: params.storeId,
+      },
+    });
+
+    return NextResponse.json(billboards);
+  } catch (error) {
+    console.log(`[BILLBOARDS_GET]`, JSON.stringify(error));
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
 
 export async function POST(
   req: Request,
@@ -48,24 +69,3 @@ export async function POST(
   }
 }
 
-export async function GET(
-  req: Request,
-  { params }: { params: { storeId: string } }
-) {
-  try {
-    if (params.storeId) {
-      return new NextResponse("StoreId is required", { status: 401 });
-    }
-
-    const billboards = await prismadb.billboard.findMany({
-      where: {
-        storeId: params.storeId,
-      },
-    });
-
-    return NextResponse.json(billboards);
-  } catch (error) {
-    console.log(`[BILLBOARDS_GET]`, JSON.stringify(error));
-    return new NextResponse("Internal error", { status: 500 });
-  }
-}

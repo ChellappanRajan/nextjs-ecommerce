@@ -28,7 +28,6 @@ title,
 description,
 variant = 'public'
 }:ApiAlertProps) {
-
     const onCopy = ()=>{
         navigator.clipboard.writeText(description);
         toast.success("API route copied to the clipboard.");

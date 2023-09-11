@@ -1,22 +1,48 @@
 "use client";
-import React from 'react'
+import React, { useState } from 'react'
 import { BillboardColumn } from './columns';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+import { useParams,useRouter } from 'next/navigation';
+import axios from 'axios';
+import AlertModal from '@/components/modals/alert.modal';
+
 interface CellActionProps{
   data:BillboardColumn;
 }
 
 export default function CellAction({data}:CellActionProps) {
+  const router = useRouter();
+  const params = useParams();
+  const [loading,setLoading]= useState(false);
+  const [isOpen,setOpen] = useState(false);
   const onCopy = (id:string)=>{
     navigator.clipboard.writeText(id);
     toast.success("Billboard id copied to the clipboard.");
-}
+};
+
+const onDelete =async ()=>{
+  try {
+    setLoading(true);
+    await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+    router.refresh();
+    router.push(`/${params.storeId}/billboards`);
+    toast.success("Billboard deleted.");
+  } catch (error) {
+    toast.error("Make sure you removed all categories using this billboard first.");
+  }
+  finally{
+    setLoading(false);
+    setOpen(false);
+  }
+};
+
   return (
-    <div >
+    <>
+      <AlertModal isOpen={isOpen} onClose={()=>setOpen(false)} onConfirm={onDelete} loading={loading} />
 <DropdownMenu>
   <DropdownMenuTrigger asChild>
     <Button variant="ghost" className='h-8 w-8 p-0'>
@@ -32,17 +58,17 @@ export default function CellAction({data}:CellActionProps) {
       <Copy className='mr-2 h-4 w-4'/>
       Copy Id
       </DropdownMenuItem>
-    <DropdownMenuItem>
-      <Edit className='mr-2 h-4 w-4'></Edit>
+    <DropdownMenuItem onClick={()=>router.push(`/${params.storeId}/billboards/${data.id}`)}>
+      <Edit  className='mr-2 h-4 w-4'></Edit>
       Update
       </DropdownMenuItem>
-      <DropdownMenuItem>
-      <Trash className='mr-2 h-4 w-4'/>
+      <DropdownMenuItem onClick={()=>setOpen(true)}>
+      <Trash  className='mr-2 h-4 w-4'/>
       Delete
       </DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
 
-    </div>
+    </>
   )
 }
