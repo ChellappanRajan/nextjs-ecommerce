@@ -44,3 +44,9 @@ npx prisma generate
 ## Prisma delete table
 
 npx prisma migrate reset
+
+
+https://github.com/mui/material-ui/issues/35993
+https://github.com/mui/material-ui/issues/36615
+https://github.com/imgix/react-imgix/issues/914
+https://github.com/lit/lit/issues/2391

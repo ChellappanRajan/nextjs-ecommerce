@@ -52,7 +52,6 @@ export default function CategoryForm({initialData,billboards}:CategoryFormProps)
 
 
   const onSubmit =async (data:CategoryFormValues)=>{
-    console.log(initialData,data,'bilboard');
     try {
       setLoading(true);
       if(initialData){
@@ -61,7 +60,7 @@ export default function CategoryForm({initialData,billboards}:CategoryFormProps)
         await axios.post(`/api/${params.storeId}/categories`,data);
       }
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/categories`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong");
