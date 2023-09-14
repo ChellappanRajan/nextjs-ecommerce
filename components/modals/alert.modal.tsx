@@ -13,7 +13,7 @@ interface AlertModalProps{
 export default function AlertModal({isOpen,onClose,onConfirm,loading}:AlertModalProps) {
   const [isMounted,setMounted] = useState(false);
   
-//   if(!isMounted)
+
 useEffect(()=>{
     setMounted(true);
 },[]);
