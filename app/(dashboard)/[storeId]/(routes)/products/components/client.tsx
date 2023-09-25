@@ -33,7 +33,7 @@ export default function ProductClient({data}:ProductClientProps) {
     </Button>
     </div>
    <Separator/>
-   <DataTable searchKey="label" columns={columns} data={data}></DataTable>
+   <DataTable searchKey="name" columns={columns} data={data}></DataTable>
    <Heading title='API' description='API calls for Products'></Heading>
    <Separator></Separator>
    <ApiList entityIdName='productId' entityName='products'></ApiList>
